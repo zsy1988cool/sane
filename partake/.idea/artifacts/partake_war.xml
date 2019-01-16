@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="partake:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="partake.war">
-      <element id="artifact" artifact-name="partake:war exploded" />
-    </root>
-  </artifact>
-</component>
