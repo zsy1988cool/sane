@@ -1,9 +1,17 @@
 package com.sane.partake.config;
 
 import com.sane.partake.core.interceptor.logger.WebLoggerInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @ComponentScan(basePackages = "com.sane.partake.controller")
@@ -38,7 +46,6 @@ public class WebConfig implements WebMvcConfigurer{
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
-        configurer.enable("defaultServletName");
     }
 
     /**
@@ -47,5 +54,24 @@ public class WebConfig implements WebMvcConfigurer{
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.jsp("/WEB-INF/views/", ".jsp");
+    }
+
+    @Bean
+    public StringHttpMessageConverter getHttpMessageConverter() {
+        StringHttpMessageConverter stringHttpMessageConverter = new StringHttpMessageConverter(Charset.forName("UTF-8"));
+        return stringHttpMessageConverter;
+    }
+
+    @Bean
+    public MappingJackson2HttpMessageConverter getMappingJackson2HttpMessageConverter() {
+        MappingJackson2HttpMessageConverter mappingJackson2CborHttpMessageConverter = new MappingJackson2HttpMessageConverter();
+
+        // 设置中文编码
+        List<MediaType> list = new ArrayList<>();
+        list.add(MediaType.APPLICATION_JSON_UTF8);
+        mappingJackson2CborHttpMessageConverter.setSupportedMediaTypes(list);
+        mappingJackson2CborHttpMessageConverter.setPrettyPrint(false);
+
+        return mappingJackson2CborHttpMessageConverter;
     }
 }
