@@ -1,5 +1,7 @@
 package com.sane.partake.config;
 
+import com.sane.partake.config.app.RootConfig;
+import com.sane.partake.config.app.WebConfig;
 import org.springframework.lang.Nullable;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 public class PartakeWebAppInitializer
