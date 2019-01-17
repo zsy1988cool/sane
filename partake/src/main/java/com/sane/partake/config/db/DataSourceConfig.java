@@ -1,11 +1,14 @@
 package com.sane.partake.config.db;
 
 import org.hibernate.SessionFactory;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @PropertySource(value = {"classpath:env/dev/config.properties"})
 @Configuration
@@ -37,10 +40,22 @@ public class DataSourceConfig {
     }
 
     @Bean("sessionFactory")
-    public SessionFactory sessionFactory() {
-        org.hibernate.cfg.Configuration cfg = new org.hibernate.cfg.Configuration().configure();
-        //cfg.configure("classpath:env/hibernate.cfg.xml");
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
 
-        return cfg.buildSessionFactory();
+        // 设置数据源
+        localSessionFactoryBean.setDataSource(dataSource());
+
+        // 设置hibernate属性
+        Properties hibernateProperties = new Properties();
+        hibernateProperties.setProperty("dialect", "org.hibernate.dialect.Oracle10gDialect");
+        hibernateProperties.setProperty("hibernate.show_sql", "true");
+        hibernateProperties.setProperty("hibernate.current_session_context_class", "thread");
+        localSessionFactoryBean.setHibernateProperties(hibernateProperties);
+
+        // 设置映射文件
+        localSessionFactoryBean.setMappingResources(new String[]{ "com/sane/partake/intellisense/Thesaurus.hbm.xml"});
+
+        return localSessionFactoryBean;
     }
 }
