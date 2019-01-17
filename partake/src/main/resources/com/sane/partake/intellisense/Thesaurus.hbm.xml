@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 注意包名。不写的话下面要写全限定名 -->
+<hibernate-mapping  package="com.sane.partake.entity.intellisense">
+    <!-- 类名对应表名 -->
+    <class name="Thesaurus" table="zoeemr.emr_intellisense">
+        <!-- 主键使用id标签。然后对应属性名与列名 -->
+        <id name="id" type="int" column="id">
+            <!-- 自增长主键不同数据库有不同类型的自增长类型，有需要可以百度到答案的 -->
+            <!--<generator class="identity"></generator>-->
+        </id>
+        <!-- 非主键映射关系，注意类型并不是单纯的java类型也不是数据库类型，而是一种中间类型，注意大小写特别是String在这里开头要小写 -->
+        <property name="data" type="string" column="data"></property>
+        <property name="type" type="int" column="type"></property>
+        <property name="searchKey" type="string" column="search_Key"></property>
+        <property name="spellCode" type="string" column="spell_Code"></property>
+        <property name="modifiedTime" type="date" column="modified_Time"></property>
+        <property name="createdTime" type="date" column="created_Time"></property>
+        <property name="validFlag" type="string" column="valid_Flag"></property>
+    </class>
+</hibernate-mapping>

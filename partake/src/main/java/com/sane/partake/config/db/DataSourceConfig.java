@@ -1,5 +1,6 @@
 package com.sane.partake.config.db;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -33,5 +34,13 @@ public class DataSourceConfig {
         driverManagerDataSource.setPassword(passWord);
 
         return driverManagerDataSource;
+    }
+
+    @Bean("sessionFactory")
+    public SessionFactory sessionFactory() {
+        org.hibernate.cfg.Configuration cfg = new org.hibernate.cfg.Configuration().configure();
+        //cfg.configure("classpath:env/hibernate.cfg.xml");
+
+        return cfg.buildSessionFactory();
     }
 }
