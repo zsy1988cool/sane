@@ -5,8 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisPassword;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import redis.clients.jedis.JedisPoolConfig;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
@@ -39,29 +37,41 @@ public class RedisConfig {
     @Value("${redis.dbIndex}")
     private int dbIndex;
 
-    JedisPoolConfig poolConfig() {
+    @Bean
+    public JedisPoolConfig poolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
-        jedisPoolConfig.setMaxTotal(maxTotal);
-        jedisPoolConfig.setMaxWaitMillis(maxWaitMills);
+        jedisPoolConfig.setMaxActive(maxTotal);
+        jedisPoolConfig.setMaxWait(maxWaitMills);
+        //jedisPoolConfig.setMaxTotal(maxTotal);
+        //jedisPoolConfig.setMaxWaitMillis(maxWaitMills);
         jedisPoolConfig.setTestOnBorrow(testOnBorrow);
 
         return jedisPoolConfig;
     }
 
     @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+    public RedisConnectionFactory jedisConnectionFactory(JedisPoolConfig poolConfig) {
+        /*RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(host);
         redisStandaloneConfiguration.setDatabase(dbIndex);
         redisStandaloneConfiguration.setPassword(RedisPassword.of(pass));
         redisStandaloneConfiguration.setPort(port);
 
-        return new JedisConnectionFactory(redisStandaloneConfiguration);
+        return new JedisConnectionFactory(redisStandaloneConfiguration);*/
+
+        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+        jedisConnectionFactory.setDatabase(dbIndex);
+        jedisConnectionFactory.setHostName(host);
+        jedisConnectionFactory.setPassword(pass);
+        jedisConnectionFactory.setPort(port);
+        jedisConnectionFactory.setPoolConfig(poolConfig());
+
+        return jedisConnectionFactory;
     }
 
     @Bean
-    StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+    public StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         return new StringRedisTemplate(redisConnectionFactory);
     }
 }

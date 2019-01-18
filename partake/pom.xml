@@ -24,8 +24,8 @@
 
     <mysql.version>8.0.13</mysql.version>
     <ojdbc.driver.version>12.1.0.2</ojdbc.driver.version>
-    <jedis.version>2.5.1</jedis.version>
-    <spring.jedis.version>2.1.3.RELEASE</spring.jedis.version>
+    <jedis.version>2.1.0</jedis.version>
+    <spring.jedis.version>1.0.2.RELEASE</spring.jedis.version>
 
     <hibernate.version>5.2.17.Final</hibernate.version>
   </properties>
