@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- 注意包名。不写的话下面要写全限定名 -->
+<hibernate-mapping  package="com.sane.partake.entity.user">
+    <!-- 类名对应表名 -->
+    <class name="User" table="zoecomm.com_staff_basic_info">
+        <!-- 主键使用id标签。然后对应属性名与列名 -->
+        <id name="userNo" type="string" column="staff_no">
+        </id>
+        <!-- 非主键映射关系，注意类型并不是单纯的java类型也不是数据库类型，而是一种中间类型，注意大小写特别是String在这里开头要小写 -->
+        <property name="birthDate" type="date" column="birth_date"></property>
+        <property name="userName" type="string" column="staff_name"></property>
+        <property name="spellCode" type="string" column="spell_Code"></property>
+        <property name="wbzxCode" type="string" column="wbzx_Code"></property>
+        <property name="modifiedTime" type="date" column="modified_Time"></property>
+        <property name="createdTime" type="date" column="created_Time"></property>
+        <property name="validFlag" type="string" column="valid_Flag"></property>
+    </class>
+</hibernate-mapping>
