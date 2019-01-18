@@ -24,4 +24,14 @@ public class UserController {
             return ResultModel.fail("获取用户信息失败", "错误");
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value="getUserName")
+    ResultModel getUserName(@RequestParam(defaultValue = "1502") String userNo) {
+        try {
+            return ResultModel.success("获取用户信息成功", userService.getUserNameByNo(userNo));
+        } catch (Exception e) {
+            return ResultModel.fail("获取用户信息失败", "错误");
+        }
+    }
 }

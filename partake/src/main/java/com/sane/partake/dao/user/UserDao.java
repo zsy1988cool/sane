@@ -16,4 +16,9 @@ public class UserDao {
     public User getUserByUserNo(String userNo) throws Exception{
         return entityManage.find(User.class, userNo);
     }
+
+    public String getUserNameByUserNo(String userNo) throws Exception {
+        User user = getUserByUserNo(userNo);
+        return user.getUserName();
+    }
 }
