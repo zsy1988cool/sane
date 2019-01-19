@@ -1,16 +1,20 @@
 package com.sane.partake.config.db;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import redis.clients.jedis.JedisPoolConfig;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 @PropertySource(value = {"classpath:env/dev/config.properties"})
 @Configuration
+@EnableCaching
 public class RedisConfig {
 
     @Value("${redis.maxIdle}")
@@ -73,5 +77,10 @@ public class RedisConfig {
     @Bean
     public StringRedisTemplate redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         return new StringRedisTemplate(redisConnectionFactory);
+    }
+
+    @Bean
+    public RedisCacheManager redisCacheManager(RedisTemplate redisTemplate) {
+        return new RedisCacheManager(redisTemplate);
     }
 }

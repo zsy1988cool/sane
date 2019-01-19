@@ -34,4 +34,10 @@ public class UserController {
             return ResultModel.fail("获取用户信息失败", "错误");
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value = "findUser")
+    ResultModel findUserList(@RequestParam(defaultValue = "周") String userName) {
+        return ResultModel.success("获取用户列表成功", userService.findUserListByUserNameLike(userName));
+    }
 }
