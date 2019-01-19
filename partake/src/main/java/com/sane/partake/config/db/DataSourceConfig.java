@@ -1,6 +1,7 @@
 package com.sane.partake.config.db;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +17,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @PropertySource(value = {"classpath:env/dev/config.properties"})
+@EnableJpaRepositories(basePackages = "com.sane.partake.dao")
 @Configuration
 public class DataSourceConfig {
 
@@ -80,7 +82,7 @@ public class DataSourceConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
         LocalContainerEntityManagerFactoryBean emfb =
                 new LocalContainerEntityManagerFactoryBean();

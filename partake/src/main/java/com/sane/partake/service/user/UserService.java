@@ -18,7 +18,8 @@ public class UserService {
     StringRedisTemplate redisTemplate;
 
     public User getUserByNo(String userNo) throws Exception{
-        return userDao.getUserByUserNo(userNo);
+        User user = userDao.findUserByUserNo(userNo);
+        return user;
     }
 
     public String getUserNameByNo(String userNo) throws Exception{
@@ -27,7 +28,8 @@ public class UserService {
             return (String)userInfoMap.get(userNo);
         }
 
-        String userName = userDao.getUserNameByUserNo(userNo);
+        User user = userDao.findUserByUserNo(userNo);
+        String userName = user.getUserName();
         redisTemplate.opsForHash().put("userInfo", userNo, userName);
         return userName;
     }
