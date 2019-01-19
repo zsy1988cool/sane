@@ -1,6 +1,8 @@
 package com.sane.partake.config.db;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
@@ -21,26 +23,17 @@ import java.util.Properties;
 @Configuration
 public class DataSourceConfig {
 
-    @Value("${datasource.driver}")
-    String dsDriver;
-
-    @Value("${datasource.url}")
-    String dsUrl;
-
-    @Value("${datasource.username}")
-    String userName;
-
-    @Value("${datasource.password}")
-    String passWord;
+    @Autowired
+    private Environment env;
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 
-        driverManagerDataSource.setDriverClassName(dsDriver);
-        driverManagerDataSource.setUrl(dsUrl);
-        driverManagerDataSource.setUsername(userName);
-        driverManagerDataSource.setPassword(passWord);
+        driverManagerDataSource.setDriverClassName(env.getProperty("datasource.driver"));
+        driverManagerDataSource.setUrl(env.getProperty("datasource.url"));
+        driverManagerDataSource.setUsername(env.getProperty("datasource.username"));
+        driverManagerDataSource.setPassword(env.getProperty("datasource.password"));
 
         return driverManagerDataSource;
     }
@@ -65,7 +58,7 @@ public class DataSourceConfig {
         return localSessionFactoryBean;
     }
 
-    //@Bean
+    @Bean
     public BeanPostProcessor persistenceTranslation() {
         return new PersistenceAnnotationBeanPostProcessor();
     }
