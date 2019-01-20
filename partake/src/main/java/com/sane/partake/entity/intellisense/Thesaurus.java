@@ -1,8 +1,9 @@
 package com.sane.partake.entity.intellisense;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Thesaurus {
+public class Thesaurus implements Serializable {
     private int id;
     private String data;
     private int type;
