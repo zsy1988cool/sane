@@ -30,6 +30,7 @@
 
     <hibernate.version>5.2.17.Final</hibernate.version>
     <hession.version>4.0.33</hession.version>
+    <activemq.version>5.7.0</activemq.version>
   </properties>
 
   <dependencies>
@@ -162,6 +163,13 @@
       <groupId>com.caucho</groupId>
       <artifactId>hessian</artifactId>
       <version>${hession.version}</version>
+    </dependency>
+
+    <!-- ActiveMQ -->
+    <dependency>
+      <groupId>org.apache.activemq</groupId>
+      <artifactId>activemq-core</artifactId>
+      <version>${activemq.version}</version>
     </dependency>
   </dependencies>
 
