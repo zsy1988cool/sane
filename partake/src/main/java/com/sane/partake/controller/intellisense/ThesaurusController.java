@@ -8,20 +8,27 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(value = "thea")
 public class ThesaurusController {
 
     @Autowired
     ThesaurusService thesaurusService;
 
-    @ResponseBody
     @RequestMapping(value = "findAll")
     public ResultModel findAll() {
         List<Thesaurus> dataList = thesaurusService.findAll(50);
         return ResultModel.success("success", dataList);
+    }
+
+    @RequestMapping(value="add")
+    public ResultModel addThesaurus(Thesaurus thesaurus) {
+        thesaurusService.insert(thesaurus);
+        return ResultModel.success();
     }
 }

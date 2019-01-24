@@ -8,4 +8,5 @@ import java.util.List;
 @Service
 public interface ThesaurusService {
     List<Thesaurus> findAll(int maxNum);
+    void insert(Thesaurus thesaurus);
 }
