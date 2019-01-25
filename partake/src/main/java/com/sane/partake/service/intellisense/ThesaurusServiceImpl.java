@@ -5,6 +5,7 @@ import com.sane.partake.entity.intellisense.Thesaurus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class ThesaurusServiceImpl implements ThesaurusService{
         return thesaurusDao.findAll(maxNum);
     }
 
+    @Transactional
     public void insert(Thesaurus thesaurus) {
         thesaurus.setValidFlag("1");
         thesaurus.setCreatedTime(new Date());

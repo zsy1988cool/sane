@@ -24,7 +24,14 @@ public class ThesaurusDao {
 
     @Transactional
     public void insert(Thesaurus thesaurus) {
-        //entityManage.remove(thesaurus);
+        Thesaurus param = new Thesaurus();
+        param.setId(thesaurus.getId());
+
+        boolean exist = entityManage.contains(param);
+        if(exist) {
+            entityManage.remove(param);
+        }
+
         entityManage.persist(thesaurus);
     }
 }
